@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Andreina & Jonys - Nosso Casamento</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #556b2f;
+      --secondary-color: #6b8e23;
+      --light-color: #cdd5c6;
+      --text-color: #444;
+      --white: #fff;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--text-color);
+      position: relative;
+      padding-top: 80px;
+      overflow-x: hidden;
+    }
+    
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.15;
+      z-index: -1;
+    }
+    
+    /* Header e Menu Hamburguer */
+    header {
+      background: rgba(205, 213, 198, 0.95);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+      padding: 1rem;
+    }
+    
+    .header-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-width: 100%;
+      padding: 0 15px;
+      margin: 0 auto;
+      position: relative;
+    }
+    
+    .couple-names {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--primary-color);
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+      letter-spacing: 1px;
+      text-align: center;
+      margin-right: 40px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 80%;
+    }
+    
+    .menu-toggle {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      cursor: pointer;
+      padding: 0.5rem;
+      position: absolute;
+      right: 15px;
+    }
+    
+    .nav-menu {
+      position: fixed;
+      top: 80px;
+      right: -100%;
+      width: 100%;
+      max-width: 400px;
+      height: calc(100vh - 80px);
+      background: rgba(205, 213, 198, 0.98);
+      transition: right 0.3s ease;
+      z-index: 999;
+      overflow-y: auto;
+      box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+    }
+    
+    .nav-menu.active {
+      right: 0;
+    }
+    
+    .nav-menu ul {
+      list-style: none;
+      padding: 2rem;
+    }
+    
+    .nav-menu li {
+      margin-bottom: 1.5rem;
+    }
+    
+    .nav-menu a {
+      text-decoration: none;
+      color: var(--primary-color);
+      font-size: 1.2rem;
+      font-weight: 500;
+      display: block;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(85, 107, 47, 0.2);
+      transition: all 0.3s ease;
+    }
+    
+    .nav-menu a:hover {
+      color: var(--secondary-color);
+      padding-left: 0.5rem;
+    }
+    
+    /* Conteúdo principal */
+    .main-content {
+      max-width: 1200px;
+      padding: 2rem 15px;
+      margin: 0 auto;
+    }
+    
+    /* Seção Hero */
+    .hero {
+      text-align: center;
+      padding: 3rem 1rem;
+      margin-bottom: 3rem;
+    }
+    
+    .wedding-date {
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      margin: 1rem 0 2rem;
+      font-weight: 300;
+    }
+    
+    .countdown {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    
+    .countdown-item {
+      background: rgba(255,255,255,0.8);
+      padding: 1rem;
+      border-radius: 8px;
+      min-width: 80px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .countdown-number {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--secondary-color);
+    }
+    
+    .countdown-label {
+      font-size: 0.8rem;
+      color: #666;
+    }
+    
+    /* Seções */
+    .section {
+      background: rgba(247, 246, 240, 0.9);
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      padding: 2rem;
+      margin-bottom: 3rem;
+      display: none;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+    
+    .section.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .section-title {
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      color: var(--primary-color);
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      word-wrap: break-word;
+    }
+    
+    /* Seção de Presentes - 2 colunas fixas */
+    .gift-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .gift {
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      min-width: 150px;
+    }
+    
+    .gift:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+    }
+    
+    .gift img {
+      width: 100%;
+      height: 180px;
+      border-radius: 8px;
+      object-fit: cover;
+      margin-bottom: 1rem;
+      border: 1px solid #eee;
+    }
+    
+    .gift h3 {
+      margin: 0.8rem 0 0.4rem;
+      font-size: 1.2rem;
+      color: var(--primary-color);
+      word-wrap: break-word;
+    }
+    
+    .gift button {
+      margin-top: 1rem;
+      padding: 0.7rem 1.5rem;
+      border: none;
+      border-radius: 25px;
+      background: var(--secondary-color);
+      color: var(--white);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 400;
+      width: 100%;
+      max-width: 200px;
+    }
+    
+    .gift button:hover {
+      background: #4e6b1f;
+      transform: scale(1.05);
+    }
+    
+    .gift button:active {
+      transform: scale(0.98);
+    }
+    
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem 15px;
+      background: rgba(205, 213, 198, 0.9);
+      color: var(--primary-color);
+      font-family: 'Playfair Display', serif;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    
+    /* Responsividade */
+    @media (max-width: 768px) {
+      .couple-names {
+        font-size: 1.5rem;
+        margin-right: 30px;
+      }
+      
+      .wedding-date {
+        font-size: 1.2rem;
+      }
+      
+      .countdown-item {
+        min-width: 70px;
+        padding: 0.8rem;
+      }
+      
+      .countdown-number {
+        font-size: 1.5rem;
+      }
+      
+      .gift {
+        padding: 1rem;
+      }
+    }
+    
+    @media (max-width: 400px) {
+      .couple-names {
+        font-size: 1.3rem;
+        margin-right: 25px;
+      }
+      
+      .gift img {
+        height: 120px;
+      }
+      
+      .section {
+        padding: 1.0rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header com Menu Hamburguer -->
+  <header>
+    <div class="header-container">
+      <h1 class="couple-names">Andreina & Jonys</h1>
+      <button class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+    
+    <nav class="nav-menu" id="navMenu">
+      <ul>
+        <li><a href="#" data-section="home">Início</a></li>
+        <li><a href="#" data-section="about">Nossa História</a></li>
+        <li><a href="#" data-section="ceremony">Cerimônia</a></li>
+        <li><a href="#" data-section="reception">Recepção</a></li>
+        <li><a href="#" data-section="gifts">Lista de Presentes</a></li>
+        <li><a href="#" data-section="gallery">Galeria</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <main class="main-content">
+    <!-- Seção Home (padrão) -->
+    <section id="home" class="section active">
+      <div class="hero">
+        <p class="wedding-date">8 DE OUTUBRO DE 2025</p>
+        
+        <div class="countdown">
+          <div class="countdown-item">
+            <div class="countdown-number" id="days">00</div>
+            <div class="countdown-label">DIAS</div>
+          </div>
+          <div class="countdown-item">
+            <div class="countdown-number" id="hours">00</div>
+            <div class="countdown-label">HORAS</div>
+          </div>
+          <div class="countdown-item">
+            <div class="countdown-number" id="minutes">00</div>
+            <div class="countdown-label">MINUTOS</div>
+          </div>
+          <div class="countdown-item">
+            <div class="countdown-number" id="seconds">00</div>
+            <div class="countdown-label">SEGUNDOS</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="section-content">
+        <h2 class="section-title">Bem-vindos ao nosso site de casamento!</h2>
+        <p style="text-align: center; margin-bottom: 2rem;">Estamos muito felizes em compartilhar este momento especial com vocês.</p>
+      </div>
+    </section>
+    
+    <!-- Seção Nossa História -->
+    <section id="about" class="section">
+      <h2 class="section-title">Nossa História</h2>
+      <div style="text-align: center;">
+        <p>historia do casal</p>
+      </div>
+    </section>
+    
+    <!-- Seção Cerimônia -->
+    <section id="ceremony" class="section">
+      <h2 class="section-title">Cerimônia</h2>
+      <div style="text-align: center;">
+        <p>Detalhes da cerimônia</p>
+      </div>
+    </section>
+    
+    <!-- Seção Recepção -->
+    <section id="reception" class="section">
+      <h2 class="section-title">Recepção</h2>
+      <div style="text-align: center;">
+        <p>Informações sobre a festa de recepção</p>
+      </div>
+    </section>
+    
+    <!-- Seção Lista de Presentes (2x2 fixo) -->
+    <section id="gifts" class="section">
+      <h2 class="section-title">Lista de Presentes</h2>
+      <div class="gift-grid">
+        <div class="gift">
+          <img src="imagens/KitFondue.jpg" alt="Kit Fondue">
+          <h3>Kit Fondue </h3>
+          <button>Presentear</button>
+        </div>
+        <div class="gift">
+          <img src="imagens/PanelaDeArroz.jpg" alt="Panela de Arroz">
+          <h3>Panela de Arroz</h3>
+          <button>Presentear</button>
+        </div>
+        <div class="gift">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4Vy8YDRUh-DPRrVdS7CzhsPm-pPpEqU8u2Q9ezmf-M9-4BPFaobN8d0GV&s=10" alt="Jogo de Panelas">
+          <h3>Jogo de Panelas</h3>
+          <button>Presentear</button>
+        </div>
+        <div class="gift">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_m_IfagLtZDB05YH8-Q13hkIP5mBikp-2O-zhqBxJjqydSeC3OxDT8vhT&s=10" alt="Jogo de Copos">
+          <h3>Jogo de Copos</h3>
+          <button>Presentear</button>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Seção Galeria -->
+    <section id="gallery" class="section">
+      <h2 class="section-title">Galeria</h2>
+      <div style="text-align: center;">
+        <p>Fotos do evento</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Andreina & Jonys - Nosso Grande Dia
+  </footer>
+
+  <script>
+    // Menu Hamburguer
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+    
+    menuToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+    
+    // Navegação entre seções
+    const navLinks = document.querySelectorAll('.nav-menu a');
+    const sections = document.querySelectorAll('.section');
+    
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        // Esconde todas as seções
+        sections.forEach(section => {
+          section.classList.remove('active');
+        });
+        
+        // Mostra a seção clicada
+        const sectionId = link.getAttribute('data-section');
+        document.getElementById(sectionId).classList.add('active');
+        
+        // Fecha o menu
+        navMenu.classList.remove('active');
+        
+        // Rola para o topo
+        window.scrollTo(0, 0);
+      });
+    });
+    
+    // Contagem regressiva (atualizada para 8 de outubro de 2025)
+    function updateCountdown() {
+      const weddingDate = new Date('October 8, 2025 00:00:00').getTime();
+      const now = new Date().getTime();
+      const distance = weddingDate - now;
+      
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      
+      document.getElementById('days').innerText = days.toString().padStart(2, '0');
+      document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
+      document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
+      document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
+    }
+    
+    // Atualiza a cada segundo
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
